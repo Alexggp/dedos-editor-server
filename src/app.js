@@ -1,7 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 
-import activitiesRoutes from './services/activities/routes.js';
+import loadingRoutes from './services/loading-routes.js';
 import mongodb from './database/database.js';
 
 const PORT = process.env.PORT || 5000;
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 
-app.use('/',activitiesRoutes);
+app.use('/',loadingRoutes);
 
 app.use('/',(req, res)=>{res.status(401).send()});
 
