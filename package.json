@@ -1,0 +1,19 @@
+{
+  "name": "comander_server",
+  "version": "1.0.0",
+  "description": "Serverside of commander app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Alejandro García-Gasco Pérez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "helmet": "^5.0.2",
+    "mongodb": "^4.4.0",
+    "mongoose": "^6.2.2"
+  }
+}
