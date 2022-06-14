@@ -4,7 +4,7 @@ const { AreasModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('POST - /areas');
+  console.log('/areas - POST');
   const data = req.body
   try{
     const area = new AreasModel({
@@ -17,7 +17,7 @@ const controller = async (req, res)=>{
       background: data.background
     });
     await area.save();
-    console.log('areas - SAVED');
+    console.log('/areas - SAVED');
     res.send(area);
   }
   catch (e) {

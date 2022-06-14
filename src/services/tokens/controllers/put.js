@@ -2,7 +2,7 @@ const { TokensModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('PUT - /areas');
+  console.log('/areas - PUT');
   const data = req.body
   try{
 
@@ -25,11 +25,15 @@ const controller = async (req, res)=>{
       content: data.content
     };
 
-    const area = await  TokensModel.findOneAndUpdate(filter, update, {
+    const token = await  TokensModel.findOneAndUpdate(filter, update, {
       new: true
     });
-    console.log('areas - UPDATED');
-    res.send(area);
+    if (!token) {
+      console.log('/tokens - Not Found');
+      return res.status(404).send();
+    }
+    console.log('tokens - Updated');
+    res.send(token);
   }
   catch (e) {
     console.log(e);

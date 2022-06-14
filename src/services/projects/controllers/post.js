@@ -4,7 +4,7 @@ const { ProjectsModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('POST - /projects');
+  console.log('/projects - POST');
   const data = req.body
   try{
     const project = new ProjectsModel({
@@ -13,7 +13,7 @@ const controller = async (req, res)=>{
       title: data.title
     });
     await project.save();
-    console.log('projects - SAVED');
+    console.log('/projects - Saved');
     res.send(project)
   }
   catch (e) {

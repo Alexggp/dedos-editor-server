@@ -2,7 +2,7 @@ const { ProjectsModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('PUT - /projects');
+  console.log('/projects - PUT');
   const data = req.body
   try{
 
@@ -13,11 +13,15 @@ const controller = async (req, res)=>{
       title: data.title
     };
 
-    const area = await  ProjectsModel.findOneAndUpdate(filter, update, {
+    const project = await  ProjectsModel.findOneAndUpdate(filter, update, {
       new: true
     });
-    console.log('projects - UPDATED');
-    res.send(area);
+    if (!project) {
+      console.log('/projects - Not Found');
+      return res.status(404).send();
+    }
+    console.log('/projects - Updated');
+    res.send(project);
   }
   catch (e) {
     console.log(e);

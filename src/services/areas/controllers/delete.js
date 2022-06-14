@@ -2,10 +2,13 @@ const { AreasModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('DELETE - /areas');
+  console.log('/areas - DELETE');
   try{
-    await AreasModel.deleteOne({ _id: req.params.id });
-    console.log('areas - deleted');
+    const area = await AreasModel.deleteOne({ _id: req.params.id });
+    if (!area.deletedCount) {
+      console.log('/areas - Not Found');
+      return res.status(404).send();
+    }
     res.send()
   }
   catch (e) {

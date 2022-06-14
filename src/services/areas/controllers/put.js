@@ -2,7 +2,7 @@ const { AreasModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('PUT - /areas');
+  console.log('/areas - PUT');
   const data = req.body
   try{
 
@@ -20,7 +20,12 @@ const controller = async (req, res)=>{
     const area = await  AreasModel.findOneAndUpdate(filter, update, {
       new: true
     });
-    console.log('areas - UPDATED');
+    if (!area) {
+      console.log('/areas - Not Found');
+      return res.status(404).send();
+    }
+
+    console.log('/areas - Updated');
     res.send(area);
   }
   catch (e) {

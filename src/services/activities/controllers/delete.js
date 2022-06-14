@@ -2,10 +2,14 @@ const { ActivitiesModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('DELETE - /activities');
+  console.log('/activities - DELETE');
   try{
-    await ActivitiesModel.deleteOne({ _id: req.params.id });
-    console.log('activities - deleted');
+    const activity = await ActivitiesModel.deleteOne({ _id: req.params.id });
+    if (!activity.deletedCount) {
+      console.log('/activities - Not Found');
+      return res.status(404).send();
+    }
+    console.log('/activities - Deleted');
     res.send()
   }
   catch (e) {

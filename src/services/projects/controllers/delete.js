@@ -2,10 +2,14 @@ const { ProjectsModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('DELETE - /projects');
+  console.log('/projects - DELETE');
   try{
-    await ProjectsModel.deleteOne({ _id: req.params.id });
-    console.log('projects - deleted');
+    const project = await ProjectsModel.deleteOne({ _id: req.params.id });
+    if (!project.deletedCount) {
+      console.log('/projects - Not Found');
+      return res.status(404).send();
+    }
+    console.log('/projects - Deleted');
     res.send()
   }
   catch (e) {

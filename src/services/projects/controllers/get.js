@@ -2,13 +2,16 @@ const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel} = require('../..
 
 const controller = async (req, res)=>{
   try{
+    console.log('/projects - GET');
 
     const projectId =  req.params.id 
     const filter = { projectId: projectId };
 
     const project = await ProjectsModel.findById(projectId);
-    if(!project) return res.status(404).send();
-
+    if(!project) {
+      console.log('/projects - Not Found');
+      return res.status(404).send();
+    }
     const activities = await ActivitiesModel.find(filter);
     const areas = await AreasModel.find(filter);
     const tokens = await TokensModel.find(filter);
@@ -19,6 +22,7 @@ const controller = async (req, res)=>{
       areas: areas,
       tokens: tokens
     }
+    console.log('/projects - Found');
     res.send(payload);
   }
   catch (e) {
