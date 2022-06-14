@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const projectsSchema = new Schema({
@@ -19,7 +19,7 @@ const ActivitiesModel = mongoose.model('Activities', activitiesSchema);
 
 const AreasSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  projectId: Number, 
+  projectId: {type: Schema.Types.ObjectId, ref: 'Projects'}, 
   activityId: {type: Schema.Types.ObjectId, ref: 'Activities'},
   type: String,
   offset: Object,
@@ -31,15 +31,13 @@ const AreasModel = mongoose.model('Areas', AreasSchema);
 
 const tokensSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  projectId: Number, 
+  projectId: {type: Schema.Types.ObjectId, ref: 'Projects'}, 
   activityId: {type: Schema.Types.ObjectId, ref: 'Activities'},
-  type: String,
-  areaId: Number,
+  areaId: {type: Schema.Types.ObjectId, ref: 'Areas'}, 
   type: String,
   offset: Object,
   size: Object,
   screenOffset: Object,
-  numValue: Number,
   clickable: Boolean,
   rotatable: Boolean,
   resizable: Boolean,
@@ -50,4 +48,4 @@ const tokensSchema = new Schema({
 
 const TokensModel = mongoose.model('Tokens', tokensSchema);
 
-export  {ProjectsModel, ActivitiesModel, AreasModel, TokensModel};
+module.exports = {ProjectsModel, ActivitiesModel, AreasModel, TokensModel};

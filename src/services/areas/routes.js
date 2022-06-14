@@ -1,13 +1,13 @@
-import postController from './controllers/post.js';
+const postController = require('./controllers/post');
+const putController = require('./controllers/put');
+const deleteControllor = require('./controllers/delete');
 
-const register = (router)=> {
+exports.registerRoutes =(router)=> {
   router
     .route('/areas')
     .post(postController)
-
+  router
+    .route('/areas/:id')
+    .put(putController)
+    .delete(deleteControllor)
 };
-
-
-
-
-export default register

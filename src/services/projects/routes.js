@@ -1,18 +1,12 @@
-import getController from './controllers/get.js';
-import postController from './controllers/post.js';
+// const getController = require('./controllers/get');
+const postController = require('./controllers/post');
 
-
-const register = (router)=> {
+exports.registerRoutes =(router)=> {
   router
     .route('/projects')
     .post(postController)
 
-  router
-    .route('/projects/:id')
-    .get(getController)
+  // router
+  //   .route('/projects/:id')
+  //   .get(getController)
 };
-
-
-
-
-export default register

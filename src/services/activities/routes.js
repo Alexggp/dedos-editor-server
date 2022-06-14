@@ -1,13 +1,13 @@
-import postController from './controllers/post.js';
+const postController = require('./controllers/post');
+const deleteController = require('./controllers/delete');
 
-
-const register = (router)=> {
+exports.registerRoutes =(router)=> {
   router
     .route('/activities')
     .post(postController)
+
+  router
+    .route('/activities/:id') 
+    .delete(deleteController)
+
 };
-
-
-
-
-export default register

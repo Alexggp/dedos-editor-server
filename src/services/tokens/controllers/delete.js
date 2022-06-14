@@ -1,14 +1,16 @@
-// import {Activities} from '../../../database/models.js';
+const { TokensModel } = require('../../../database/models');
 
 
-// const controller = async (req, res)=>{
-
-//   const update = {name: 'prueba', currency: '$' };
-//   const filter = {name: 'prueba'};
-
-//   const doc = await Activities.findOneAndUpdate(filter, update);
-//   res.send(doc);
-  
-// };
-
-// export default controller;
+const controller = async (req, res)=>{
+  console.log('DELETE - /tokens');
+  try{
+    await TokensModel.deleteOne({ _id: req.params.id });
+    console.log('tokens - deleted');
+    res.send()
+  }
+  catch (e) {
+    console.log(e);
+    res.status(400).send();
+ }
+}
+module.exports = controller;

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import  config  from '../../config.js';
+const mongoose = require('mongoose');
+const config = require('../../config');
 
 const mongodb = config.mongodb;
 const connect = ()=>{
@@ -9,4 +9,4 @@ const connect = ()=>{
 
 }
 
-  export default connect;
+module.exports  = connect;

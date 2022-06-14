@@ -1,13 +1,14 @@
 /* list of all routes */
-import express from 'express';
-import activitiesRoute from './activities/routes.js';
-import areasRoute from './areas/routes.js';
-import tokensRoute from './tokens/routes.js';
-import projectsRoute from './projects/routes.js';
+const router = require('express').Router();
 
-const router = express.Router()
+const activitiesRoute = require ('./activities/routes.js');
+const areasRoute = require ('./areas/routes.js');
+const tokensRoute = require ('./tokens/routes.js');
+const projectsRoute = require ('./projects/routes');
 
-const register = () => {
+
+
+function register() {
   activitiesRoute.registerRoutes(router);
   areasRoute.registerRoutes(router);
   tokensRoute.registerRoutes(router);
@@ -15,4 +16,4 @@ const register = () => {
 
   return router;
 }
-export default register;
+module.exports.register = register;

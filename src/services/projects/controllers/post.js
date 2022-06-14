@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-import { ProjectsModel } from '../../../database/models.js';
+const { ProjectsModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-
+  console.log('POST - /projects');
   const data = req.body
   try{
     const project = new ProjectsModel({
@@ -13,19 +13,13 @@ const controller = async (req, res)=>{
       title: data.title
     });
     await project.save();
-
+    console.log('projects - SAVED');
     res.send(project)
   }
   catch (e) {
     console.log(e);
+    res.status(400).send();
  }
-  
-
-
-
-
-  
-  
 }
 
-export default controller;
+module.exports = controller;

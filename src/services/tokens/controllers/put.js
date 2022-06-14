@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
-
 const { TokensModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
-  console.log('POST - /tokens');
+  console.log('PUT - /areas');
   const data = req.body
   try{
-    const area = new TokensModel({
-      _id: new mongoose.Types.ObjectId(),
+
+    const filter = { _id: req.params.id };
+
+    const update = {
       projectId: data.projectId,
       activityId: data.activityId,
       areaId: data.areaId,
@@ -23,9 +23,12 @@ const controller = async (req, res)=>{
       movable: data.movable,
       feedback: data.feedback,
       content: data.content
+    };
+
+    const area = await  TokensModel.findOneAndUpdate(filter, update, {
+      new: true
     });
-    await area.save();
-    console.log('tokens - SAVED');
+    console.log('areas - UPDATED');
     res.send(area);
   }
   catch (e) {

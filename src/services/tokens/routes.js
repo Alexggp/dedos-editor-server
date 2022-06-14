@@ -1,16 +1,14 @@
-import postController from './controllers/post.js';
-// import deleteController from './controllers/delete.js';
+const postController = require('./controllers/post');
+const putController = require('./controllers/put');
+const deleteController = require('./controllers/delete');
 
 
-const register = (router)=> {
+exports.registerRoutes =(router)=> {
   router
     .route('/tokens')
     .post(postController)
-    // .delete(deleteController)
-
+  router
+    .route('/tokens/:id')
+    .put(putController)
+    .delete(deleteController)
 };
-
-
-
-
-export default register

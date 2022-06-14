@@ -2,9 +2,7 @@
   "name": "comander_server",
   "version": "1.0.0",
   "description": "Serverside of commander app",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
+  "main": "index.js",  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
