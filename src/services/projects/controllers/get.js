@@ -1,18 +1,23 @@
-import {ProjectsModel, ActivitiesModel, AreasModel, TokensModel} from '../../../database/models.js';
+const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel} = require('../../../database/models.js');
 
 const controller = async (req, res)=>{
-  const projectId = req.params.id.toLowerCase()
   try{
-    const project = await ProjectsModel.find({projectId:projectId});
-    const activities = await ActivitiesModel.find({projectId:projectId});
-    const areas = await AreasModel.find({projectId:projectId});
-    const tokens = await TokensModel.find({projectId:projectId});
+
+    const projectId =  req.params.id 
+    const filter = { projectId: projectId };
+
+    const project = await ProjectsModel.findById(projectId);
+    if(!project) return res.status(404).send();
+
+    const activities = await ActivitiesModel.find(filter);
+    const areas = await AreasModel.find(filter);
+    const tokens = await TokensModel.find(filter);
 
     const payload = {
-      project: project[0],
-      activities: activities[0],
-      areas: areas[0],
-      tokens: tokens[0]
+      project: project,
+      activities: activities,
+      areas: areas,
+      tokens: tokens
     }
     res.send(payload);
   }
@@ -23,5 +28,5 @@ const controller = async (req, res)=>{
   
 }
 
-export default controller;
+module.exports = controller;
 
