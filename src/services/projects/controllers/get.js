@@ -17,6 +17,7 @@ const controller = async (req, res)=>{
     res.send(payload);
   }
   catch (e) {
+    console.log(e);
     res.status(404).send();
  }
   
