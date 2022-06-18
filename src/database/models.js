@@ -33,7 +33,7 @@ const tokensSchema = new Schema({
   _id: Schema.Types.ObjectId,
   projectId: {type: Schema.Types.ObjectId, ref: 'Projects'}, 
   activityId: {type: Schema.Types.ObjectId, ref: 'Activities'},
-  areaId: {type: Schema.Types.ObjectId, ref: 'Areas'}, 
+  areaId: {type: Schema.Types.Mixed, ref: 'Areas'}, 
   type: String,
   offset: Object,
   size: Object,

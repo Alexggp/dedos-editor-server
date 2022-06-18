@@ -7,7 +7,7 @@ const controller = async (req, res)=>{
   console.log('POST - /tokens');
   const data = req.body
   try{
-    const area = new TokensModel({
+    const token = new TokensModel({
       _id: new mongoose.Types.ObjectId(),
       projectId: data.projectId,
       activityId: data.activityId,
@@ -24,9 +24,9 @@ const controller = async (req, res)=>{
       feedback: data.feedback,
       content: data.content
     });
-    await area.save();
+    await token.save();
     console.log('tokens - SAVED');
-    res.send(area);
+    res.send(token);
   }
   catch (e) {
     console.log(e);
