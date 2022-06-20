@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const projectsSchema = new Schema({
   _id: Schema.Types.ObjectId,
   userId: Number,
-  title: String
+  title: String, 
+  description: String
 });
 
 const ProjectsModel = mongoose.model('Projects', projectsSchema);
