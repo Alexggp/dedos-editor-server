@@ -10,7 +10,9 @@ const controller = async (req, res)=>{
     const project = new ProjectsModel({
       _id: new mongoose.Types.ObjectId(),
       userId: data.userId,
-      title: data.title
+      title: data.title,
+      description: data.description,
+      screenResolution: data.screenResolution
     });
     await project.save();
     console.log('/projects - Saved');

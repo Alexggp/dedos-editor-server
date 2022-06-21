@@ -9,8 +9,6 @@ const controller = async (req, res)=>{
     const filter = { _id: req.params.id };
 
     const update = {
-      projectId: data.projectId,
-      activityId: data.activityId,
       type: data.type,
       offset: data.offset,
       size: data.size,

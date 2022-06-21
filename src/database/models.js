@@ -5,7 +5,8 @@ const projectsSchema = new Schema({
   _id: Schema.Types.ObjectId,
   userId: Number,
   title: String, 
-  description: String
+  description: String,
+  screenResolution: String
 });
 
 const ProjectsModel = mongoose.model('Projects', projectsSchema);

@@ -9,8 +9,9 @@ const controller = async (req, res)=>{
     const filter = { _id: req.params.id };
 
     const update = {
-      userId: data.userId,
-      title: data.title
+      title: data.title,
+      description: data.description,
+      screenResolution: data.screenResolution
     };
 
     const project = await  ProjectsModel.findOneAndUpdate(filter, update, {
