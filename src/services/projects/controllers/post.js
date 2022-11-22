@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 
-const { ProjectsModel } = require('../../../database/models');
+const { ProjectsModel, ActivitiesModel } = require('../../../database/models');
 
 
 const controller = async (req, res)=>{
   console.log('/projects - POST');
   const data = req.body
   try{
+
+    // Creating a new project
     const project = new ProjectsModel({
       _id: new mongoose.Types.ObjectId(),
       userId: data.userId,
@@ -15,6 +17,14 @@ const controller = async (req, res)=>{
       screenResolution: data.screenResolution
     });
     await project.save();
+
+    // Creating the first activity inside the project
+    const activity = new ActivitiesModel({
+      _id: new mongoose.Types.ObjectId(),
+      projectId: project._id
+    });
+    await activity.save();
+    
     console.log('/projects - Saved');
     res.send(project)
   }
