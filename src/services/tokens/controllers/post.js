@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { TokensModel } = require('../../../database/models');
+const { TokensModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{

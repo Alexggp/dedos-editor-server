@@ -1,4 +1,4 @@
-const { AreasModel } = require('../../../database/models');
+const { AreasModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{

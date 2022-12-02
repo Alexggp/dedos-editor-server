@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { ProjectsModel, ActivitiesModel } = require('../../../database/models');
+const { ProjectsModel, ActivitiesModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{

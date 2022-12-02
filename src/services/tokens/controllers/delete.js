@@ -1,4 +1,4 @@
-const { TokensModel } = require('../../../database/models');
+const { TokensModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
