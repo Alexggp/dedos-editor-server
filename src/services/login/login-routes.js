@@ -1,53 +1,62 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
-router.post('/signup', passport.authenticate('local-signup', {
-  passReqToCallback: true
-}), (req, res) => {
-  const user = {
-    _id: req.user._id,
-    email: req.user.email,
-    name: req.user.name
-  }
-  res.send(user);
+const { authorization } = require('../../../config');
+
+router.post('/signup', function(req, res, next) {
+  passport.authenticate('local-signup', function(err, user, info) {
+    try {
+      if (err) {
+        return next(err); // will generate a 500 error
+      }
+
+      if (! user) {
+        return res.status(info.status).send(info);
+      }
+
+      req.login(user, {
+        passReqToCallback: true,
+        session: false
+      }, async (err) => {
+        if (err) return next(err)
+        const body = { _id: user._id, email: user.email, name: user.name }
+        return res.send(body)
+      })
+    } 
+    catch (e) {
+      return next(e)
+    }
+  })(req, res, next);
 });
 
-router.post('/signin', passport.authenticate('local-signin', {
-  passReqToCallback: true
-}), (req, res) => {
-  const user = {
-    _id: req.user._id,
-    email: req.user.email,
-    name: req.user.name
-  }
-  res.send(user);
+router.post('/signin', function(req, res, next) {
+  passport.authenticate('local-signin', function(err, user, info) {
+    try {
+      if (err) {
+        return next(err); // will generate a 500 error
+      }
+      // Generate a JSON response reflecting authentication status
+      if (! user) {
+        return res.status(info.status).send(info);
+      }
+
+      req.login(user, { session: false }, async (err) => {
+        if (err) return next(err)
+        const user_data = { _id: user._id, email: user.email, name: user.name }
+
+        const token = jwt.sign( user_data ,
+           authorization.secret, 
+           {expiresIn: authorization.expiration}
+          )
+        return res.send({user_data, token});
+      })
+    } 
+    catch (e) {
+      return next(e)
+    }
+  })(req, res, next);
 });
-// router.get('/login/facebook', passport.authenticate('facebok-login'));
-// router.get('/auth/facebook/callback', passport.authenticate('facebok-login', {
-//   successRedirect: '/projects',
-//   failureRedirect: '/user/signin',
-// }));
-
-router.get('/logout', (req, res) => {
-  req.logout();
-  res.send();
-});
-
-//router.use(isAuthenticated);
-
-// router.get('/projects', isAuthenticated, (req, res) => {
-//   res.render('projects.ejs');
-// });
-
-
-// function isAuthenticated(req, res ,next) {
-//   if (req.isAuthenticated()){
-//     return next();
-//   }else{
-//     res.redirect('/');
-//   }
-// };
-
 
 module.exports = router;

@@ -18,34 +18,44 @@ passport.use('local-signup', new LocalStrategy({
   passReqToCallback: true
 }, async (req, email, password, done)=>{
 
-  const user = await User.findOne({email:email});
+  try{
+    const user = await User.findOne({email:email});
 
-  if(user){
-    return done({status: 409})
+    if (user){
+      return done(null, false, { status:409, message: 'User already exists' })
+    }
+  
+    const newUser = new User();
+    newUser.email = email;
+    newUser.password = newUser.encryptPassword(password);
+    newUser.name = req.body.name;
+    await newUser.save();
+    done(null, newUser);
+
+  } catch (e){
+    return done(e);
   }
-
-  const newUser = new User();
-  newUser.email = email;
-  newUser.password = newUser.encryptPassword(password);
-  newUser.name = req.body.name;
-  await newUser.save();
-  done(null, newUser);
+ 
 }));
 
 
 passport.use('local-signin', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
-  passReqToCallback: true
-}, async (req, email, password, done)=>{
+}, async (email, password, done)=>{
 
-  const user = await User.findOne({email:email});
+  try{
+    const user = await User.findOne({email:email});
 
-  if(!user){
-    return done({status: 404});
+    if(!user){
+      return done(null, false, { status:401, message: 'Incorrect user or password' })
+    }
+    if(!user.comparePassword(password, user.password)){
+      return done(null, false, { status:401, message: 'Incorrect user or password' })
+    }
+    done(null, user);
+  } catch (e) {
+    return done(e);
   }
-  if(!user.comparePassword(password, user.password)){
-    return done({status: 401});
-  }
-  done(null, user);
+
 }));

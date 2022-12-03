@@ -12,13 +12,14 @@
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "express": "^4.17.3",
-    "express-session": "^1.17.3",
     "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.2",
     "morgan": "^1.10.0",
     "passport": "^0.6.0",
     "passport-facebook": "^3.0.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   }
 }
