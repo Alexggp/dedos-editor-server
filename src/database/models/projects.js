@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const projectsSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  userId: Number,
+  userId: {type: Schema.Types.ObjectId, ref: 'users'},
   title: String, 
   description: String,
   screenResolution: String

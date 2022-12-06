@@ -1,33 +1,21 @@
-const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel} = require('../../../database/models/projects.js');
+const {ProjectsModel} = require('../../../database/models/projects.js');
 
 const controller = async (req, res)=>{
   try{
-    console.log('/projects - GET');
 
-    const projectId =  req.params.id 
-    const filter = { projectId: projectId };
+    const userId =  res.locals.user;
+    const filter = { userId: userId };
 
-    const project = await ProjectsModel.findById(projectId);
-    if(!project) {
-      console.log('/projects - Not Found');
+    const projects = await ProjectsModel.find(filter);
+    if(!projects) {
       return res.status(404).send();
     }
-    const activities = await ActivitiesModel.find(filter);
-    const areas = await AreasModel.find(filter);
-    const tokens = await TokensModel.find(filter);
-
-    const payload = {
-      project: project,
-      activities: activities,
-      areas: areas,
-      tokens: tokens
-    }
-    console.log('/projects - Found');
-    res.send(payload);
+  
+    res.send(projects);
   }
   catch (e) {
     console.log(e);
-    res.status(404).send();
+    res.status(500).send();
  }
   
 }

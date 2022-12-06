@@ -4,14 +4,14 @@ const { ProjectsModel, ActivitiesModel } = require('../../../database/models/pro
 
 
 const controller = async (req, res)=>{
-  console.log('/projects - POST');
   const data = req.body
   try{
 
     // Creating a new project
+    const userId =  res.locals.user;
     const project = new ProjectsModel({
       _id: new mongoose.Types.ObjectId(),
-      userId: data.userId,
+      userId: userId,
       title: data.title,
       description: data.description,
       screenResolution: data.screenResolution
@@ -25,12 +25,11 @@ const controller = async (req, res)=>{
     });
     await activity.save();
     
-    console.log('/projects - Saved');
     res.send(project)
   }
   catch (e) {
     console.log(e);
-    res.status(400).send();
+    res.status(500).send();
  }
 }
 

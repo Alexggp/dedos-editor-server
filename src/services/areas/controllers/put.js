@@ -2,7 +2,6 @@ const { AreasModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
-  console.log('/areas - PUT');
   const data = req.body
   try{
 
@@ -19,16 +18,14 @@ const controller = async (req, res)=>{
       new: true
     });
     if (!area) {
-      console.log('/areas - Not Found');
       return res.status(404).send();
     }
 
-    console.log('/areas - Updated');
     res.send(area);
   }
   catch (e) {
     console.log(e);
-    res.status(400).send();
+    res.status(500).send();
  }
 }
 module.exports = controller;

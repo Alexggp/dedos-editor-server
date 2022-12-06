@@ -2,7 +2,6 @@ const { TokensModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
-  console.log('/areas - PUT');
   const data = req.body
   try{
 
@@ -27,15 +26,13 @@ const controller = async (req, res)=>{
       new: true
     });
     if (!token) {
-      console.log('/tokens - Not Found');
       return res.status(404).send();
     }
-    console.log('tokens - Updated');
     res.send(token);
   }
   catch (e) {
     console.log(e);
-    res.status(400).send();
+    res.status(500).send();
  }
 }
 module.exports = controller;

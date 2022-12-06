@@ -1,23 +1,18 @@
-const getController = require('./controllers/get');
+const getByIdController = require('./controllers/getById');
 const postController = require('./controllers/post');
 const putController = require('./controllers/put');
 const deleteController = require('./controllers/delete');
-const getAllController = require('./controllers/getAll');
-
-
+const getController = require('./controllers/get');
 
 exports.registerRoutes =(router)=> {
   router
     .route('/projects')
+    .get(getController)
     .post(postController)
 
   router
     .route('/projects/:id')
-    .get(getController)
+    .get(getByIdController)
     .put(putController)
     .delete(deleteController)
-  router
-    .route('/projects/user/:id')
-    .get(getAllController)
- 
 };

@@ -4,7 +4,6 @@ const { TokensModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
-  console.log('POST - /tokens');
   const data = req.body
   try{
     const token = new TokensModel({
@@ -25,12 +24,11 @@ const controller = async (req, res)=>{
       content: data.content
     });
     await token.save();
-    console.log('tokens - SAVED');
     res.send(token);
   }
   catch (e) {
     console.log(e);
-    res.status(400).send();
+    res.status(500).send();
  }
 }
 module.exports = controller;
