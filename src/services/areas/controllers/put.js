@@ -11,7 +11,8 @@ const controller = async (req, res)=>{
       type: data.type,
       offset: data.offset,
       size: data.size,
-      background: data.background
+      background: data.background,
+      zIndex: data.zIndex
     };
 
     const area = await  AreasModel.findOneAndUpdate(filter, update, {

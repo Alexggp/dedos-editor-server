@@ -8,7 +8,8 @@ const controller = async (req, res)=>{
   try{
     const activity = new ActivitiesModel({
       _id: new mongoose.Types.ObjectId(),
-      projectId: data.projectId
+      projectId: data.projectId,
+      zIndexTop: 0
     });
     await activity.save();
     res.send(activity)

@@ -19,7 +19,8 @@ const controller = async (req, res)=>{
       resizable: data.resizable,
       movable: data.movable,
       feedback: data.feedback,
-      content: data.content
+      content: data.content,
+      zIndex: data.zIndex
     };
 
     const token = await  TokensModel.findOneAndUpdate(filter, update, {

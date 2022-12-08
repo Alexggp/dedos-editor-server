@@ -6,7 +6,7 @@ const projectsSchema = new Schema({
   userId: {type: Schema.Types.ObjectId, ref: 'users'},
   title: String, 
   description: String,
-  screenResolution: String
+  screenResolution: String,
 });
 
 const ProjectsModel = mongoose.model('Projects', projectsSchema);
@@ -15,6 +15,7 @@ const ProjectsModel = mongoose.model('Projects', projectsSchema);
 const activitiesSchema = new Schema({
   _id: Schema.Types.ObjectId,
   projectId: {type: Schema.Types.ObjectId, ref: 'Projects'},
+  zIndexTop: Number
 });
 
 const ActivitiesModel = mongoose.model('Activities', activitiesSchema);
@@ -26,7 +27,8 @@ const AreasSchema = new Schema({
   type: String,
   offset: Object,
   size: Object,
-  background: String
+  background: String,
+  zIndex: Number
 });
 
 const AreasModel = mongoose.model('Areas', AreasSchema);
@@ -45,7 +47,8 @@ const tokensSchema = new Schema({
   resizable: Boolean,
   movable: Boolean,
   mathematics: Number,
-  content: Object
+  content: Object,
+  zIndex: Number
 });
 
 const TokensModel = mongoose.model('Tokens', tokensSchema);
