@@ -6,7 +6,9 @@ const controller = async (req, res)=>{
     const activity = await ActivitiesModel.findById(req.params.id)
     const proyectActivities = await ActivitiesModel.find({projectId: activity.projectId});
     if (proyectActivities.length === 1){
-      return res.status(405).send();      
+      return res.status(405).send({
+        message: 'El proyecto no puede quedar vacío'
+     });      
     }
     const deleted = await ActivitiesModel.deleteOne({ _id: req.params.id });
     if (!deleted.deletedCount) {

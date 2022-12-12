@@ -31,7 +31,7 @@ app.use(express.json());
 app.use('/user',loginRountes);
 app.use('/', jwtAuthentication, loadingRoutes.register());
 
-app.use('/',(req, res)=>{res.status(401).send()});
+app.use('/',(req, res)=>{res.status(404).send()});
 
 app.listen(PORT, () => {
   mongodb();
