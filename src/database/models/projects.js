@@ -53,4 +53,18 @@ const tokensSchema = new Schema({
 
 const TokensModel = mongoose.model('Tokens', tokensSchema);
 
-module.exports = {ProjectsModel, ActivitiesModel, AreasModel, TokensModel};
+
+const objetivesSchema = new Schema({
+  _id: Schema.Types.ObjectId,
+  projectId: {type: Schema.Types.ObjectId, ref: 'Projects'}, 
+  activityId: {type: Schema.Types.ObjectId, ref: 'Activities'},
+  type: String,
+  origin: {type: Schema.Types.ObjectId, refPath: 'model_type'},
+  target: {type: Schema.Types.ObjectId, refPath: 'model_type'},
+  model_type: {type: String, enum: ['Token', 'Areas']},
+  value: Number,
+});
+
+const ObjetivesModel = mongoose.model('Objetives', objetivesSchema);
+
+module.exports = {ProjectsModel, ActivitiesModel, AreasModel, TokensModel, ObjetivesModel};
