@@ -1,4 +1,4 @@
-const { AreasModel } = require('../../../database/models/projects');
+const { AreasModel, ObjetivesModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
@@ -7,7 +7,12 @@ const controller = async (req, res)=>{
     if (!area.deletedCount) {
       return res.status(404).send();
     }
-    res.send()
+
+    // Deleting attached objetives
+    const filter = { $or: [{origin: req.params.id}, {target: req.params.id}]};
+    await ObjetivesModel.deleteMany(filter);
+
+    res.send();
   }
   catch (e) {
     console.log(e);
