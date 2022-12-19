@@ -1,4 +1,4 @@
-const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel} = require('../../../database/models/projects.js');
+const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel, ObjetivesModel} = require('../../../database/models/projects.js');
 
 
 const controller = async (req, res)=>{
@@ -14,6 +14,8 @@ const controller = async (req, res)=>{
     await ActivitiesModel.deleteMany(filter);
     await AreasModel.deleteMany(filter);
     await TokensModel.deleteMany(filter);
+    await ObjetivesModel.deleteMany(filter);
+
     res.send()
   }
   catch (e) {

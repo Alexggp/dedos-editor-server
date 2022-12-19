@@ -1,4 +1,4 @@
-const { ActivitiesModel } = require('../../../database/models/projects');
+const { ActivitiesModel, AreasModel, TokensModel, ObjetivesModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
@@ -14,6 +14,12 @@ const controller = async (req, res)=>{
     if (!deleted.deletedCount) {
       return res.status(404).send();
     }
+    const filter = { activityId: req.params.id };
+
+    await AreasModel.deleteMany(filter);
+    await TokensModel.deleteMany(filter);
+    await ObjetivesModel.deleteMany(filter);
+
     res.send()
   }
   catch (e) {
