@@ -1,4 +1,4 @@
-const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel} = require('../../../database/models/projects.js');
+const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel, ObjetivesModel} = require('../../../database/models/projects.js');
 
 const controller = async (req, res)=>{
   try{
@@ -13,12 +13,15 @@ const controller = async (req, res)=>{
     const activities = await ActivitiesModel.find(filter);
     const areas = await AreasModel.find(filter);
     const tokens = await TokensModel.find(filter);
+    const objetives = await ObjetivesModel.find(filter);
+
 
     const payload = {
-      project: project,
-      activities: activities,
-      areas: areas,
-      tokens: tokens
+      project,
+      activities,
+      areas,
+      tokens,
+      objetives
     }
     res.send(payload);
   }
