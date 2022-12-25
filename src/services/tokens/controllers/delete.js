@@ -1,4 +1,4 @@
-const { TokensModel, ObjetivesModel } = require('../../../database/models/projects');
+const { TokensModel } = require('../../../database/models/projects');
 
 
 const controller = async (req, res)=>{
@@ -7,11 +7,6 @@ const controller = async (req, res)=>{
     if (!token.deletedCount) {
       return res.status(404).send();
     }
-
-    // Deleting attached objetives
-    const filter = { $or: [{origin: req.params.id}, {target: req.params.id}]};
-    await ObjetivesModel.deleteMany(filter);
-
     res.send()
   }
   catch (e) {
