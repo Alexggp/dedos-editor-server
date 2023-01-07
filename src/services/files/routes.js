@@ -1,12 +1,12 @@
 const postController = require('./controllers/post');
-// const deleteController = require('./controllers/delete');
+const deleteController = require('./controllers/delete');
 
 exports.registerRoutes =(router)=> {
   router
     .route('/files')
     .post(postController)
 
-  // router
-  //   .route('/objetives/:fileName') 
-  //   .delete(deleteController)
+  router
+    .route('/files/:fileName') 
+    .delete(deleteController)
 };
