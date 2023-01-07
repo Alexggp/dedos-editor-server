@@ -12,13 +12,15 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(morgan('dev'));
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+}));
 
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header("Access-Control-Allow-Credentials", true);
-  res.header('Access-Control-Allow-Headers', 'Origin, content-type, Access-Control-Allow-Request-Method, Authorization, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, content-type, content-length, Access-Control-Allow-Request-Method, Authorization, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
   next();
 });
@@ -27,7 +29,9 @@ app.options('/*', (_, res) => {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.use('/public', express.static('public'));
 app.use('/user',loginRountes);
 app.use('/', jwtAuthentication, loadingRoutes.register());
 
