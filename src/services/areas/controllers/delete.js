@@ -1,15 +1,10 @@
-const { AreasModel } = require('../../../database/models/projects');
-const { removeFile } = require('../../files/controllers/delete');
+const { AreasModel, FilesModel } = require('../../../database/models/projects');
+const { removeFiles } = require('../../files/controllers/delete');
 
 const controller = async (req, res)=>{
   try{
-    const area = await AreasModel.findById(req.params.id);
-    // removing background image from file system
-    if (area?.background) {
-      const imageUrlParsed = area.background.split('/');
-      const fileName = imageUrlParsed[imageUrlParsed.length-1];
-      await removeFile(fileName);
-    }
+    const files = await FilesModel.find({containerId: req.params.id});
+    await removeFiles(files);
     const deleted = await AreasModel.deleteOne({ _id: req.params.id });
     if (!deleted.deletedCount) {
       return res.status(404).send();
@@ -22,6 +17,7 @@ const controller = async (req, res)=>{
         message: "El archivo no existe"
       })
     }
+    console.log(e);
     return res.status(500).send();
  }
 }

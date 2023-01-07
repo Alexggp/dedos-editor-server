@@ -1,18 +1,11 @@
-const { TokensModel } = require('../../../database/models/projects');
-const { removeFile } = require('../../files/controllers/delete');
+const { TokensModel, FilesModel } = require('../../../database/models/projects');
+const { removeFiles } = require('../../files/controllers/delete');
 
 
 const controller = async (req, res)=>{
   try{
-    const token = await TokensModel.findById(req.params.id);
-    // removing content images from file system
-    if(token?.type === 'img' && token?.content?.urlList?.length){
-      token.content.urlList.forEach(async url => {
-        const imageUrlParsed = url.split('/');
-        const fileName = imageUrlParsed[imageUrlParsed.length-1];
-        await removeFile(fileName);
-      })
-    }
+    const files = await FilesModel.find({containerId: req.params.id});
+    await removeFiles(files);
     const deleted = await TokensModel.deleteOne({ _id: req.params.id });
     if (!deleted.deletedCount) {
       return res.status(404).send();
@@ -25,6 +18,7 @@ const controller = async (req, res)=>{
         message: "El archivo no existe"
       })
     }
+    console.log(e);
     res.status(500).send();
  }
 }

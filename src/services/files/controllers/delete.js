@@ -1,18 +1,29 @@
+const { FilesModel } = require('../../../database/models/projects');
 const fs = require('fs');
 const DIR = './public/';
 
-const removeFile = async (file) => {
+const removeFiles = async (files) => {
+  files.forEach(async (file)=>{
+    try{
+      const path = DIR + file.fileName;
+      await fs.promises.unlink(path);
+      const deleted = await FilesModel.deleteOne({ _id: file._id });
+      if (!deleted.deletedCount) {
+        throw new Error('Deleting file error!');
+      }
+    } catch (e) {
+      throw new Error('Deleting file error!');
+    }
 
-  const path = DIR + file;
-  return await fs.promises.unlink(path);
+  })
 }
-
 
 const deleteController = async (req, res)=>{
 
   try{
-    await removeFile(req.params.fileName);
-    res.send();
+    const files = await FilesModel.find({fileName: req.params.fileName})
+    await removeFiles(files);
+    res.send(files);
   }
   catch (e) {
     if(e.code === 'ENOENT'){
@@ -20,8 +31,9 @@ const deleteController = async (req, res)=>{
         message: "El archivo no existe"
       })
     }
+    console.log(e);
     res.status(500).send();
  }
 }
 
-module.exports = { deleteController, removeFile}
+module.exports = { deleteController, removeFiles}

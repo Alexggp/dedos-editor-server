@@ -1,5 +1,7 @@
 const multer = require('multer');
+const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const { FilesModel } = require('../../../database/models/projects');
 
 const DIR = './public/';
 
@@ -27,8 +29,17 @@ var upload = multer({
 
 
 const controller = async (req, res)=>{
+  const data = req.body;
   const url = req.protocol + '://' + req.get('host') + '/public/' + req.file.filename;
   try{
+    const file = new FilesModel({
+      _id: new mongoose.Types.ObjectId(),
+      projectId: data.projectId,
+      activityId: data.activityId,
+      containerId: data.containerId,
+      fileName: req.file.filename
+    })
+    await file.save();
     const response = {
       url: url
     }

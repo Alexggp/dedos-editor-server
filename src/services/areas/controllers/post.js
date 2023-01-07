@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const { AreasModel } = require('../../../database/models/projects');
 
 
