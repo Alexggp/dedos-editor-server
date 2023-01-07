@@ -1,5 +1,5 @@
 const postController = require('./controllers/post');
-const deleteController = require('./controllers/delete');
+const { deleteController } = require('./controllers/delete');
 
 exports.registerRoutes =(router)=> {
   router

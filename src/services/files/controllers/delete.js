@@ -8,7 +8,7 @@ const removeFile = async (file) => {
 }
 
 
-const controller = async (req, res)=>{
+const deleteController = async (req, res)=>{
 
   try{
     await removeFile(req.params.fileName);
@@ -24,4 +24,4 @@ const controller = async (req, res)=>{
  }
 }
 
-module.exports = controller;
+module.exports = { deleteController, removeFile}
