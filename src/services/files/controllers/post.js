@@ -1,4 +1,5 @@
 const multer = require('multer');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 const { FilesModel } = require('../../../database/models/projects');
@@ -32,6 +33,9 @@ const controller = async (req, res)=>{
   const data = req.body;
   const url = req.protocol + '://' + req.get('host') + '/public/' + req.file.filename;
   try{
+    if (await !fs.existsSync(DIR)) {
+      await fs.mkdirSync(DIR);
+    }
     const file = new FilesModel({
       _id: new mongoose.Types.ObjectId(),
       projectId: data.projectId,

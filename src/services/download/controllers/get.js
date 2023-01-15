@@ -1,14 +1,16 @@
-const {ProjectsModel, ActivitiesModel, AreasModel, TokensModel, ObjetivesModel} = require('../../../database/models/projects.js');
+const { ProjectsModel, ActivitiesModel, AreasModel, TokensModel, ObjetivesModel } = require('../../../database/models/projects.js');
 const processXML = require('./processXML');
+const createZIP = require('./createZIP');
 
-const controller = async (req, res)=>{
-  try{
 
-    const projectId =  req.params.proyectId 
+const controller = async (req, res) => {
+  try {
+
+    const projectId = req.params.proyectId
     const filter = { projectId: projectId };
 
     const project = await ProjectsModel.findById(projectId);
-    if(!project) {
+    if (!project) {
       return res.status(404).send();
     }
     const activities = await ActivitiesModel.find(filter);
@@ -24,14 +26,15 @@ const controller = async (req, res)=>{
       tokens,
       objetives
     }
-    const xml = processXML(payload)
-    res.send(xml);
+    const { xml, images } = processXML(payload);
+    const fileName = await createZIP(xml, images, payload.project.title.replace(/\s/g, ""))
+    res.send(fileName);
   }
   catch (e) {
     console.log(e);
     res.status(500).send();
- }
-  
+  }
+
 }
 
 module.exports = controller;

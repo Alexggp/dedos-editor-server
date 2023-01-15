@@ -1,6 +1,8 @@
 const config = require('../../../../config');
 const processXML = (data) =>{
 
+  const images = [];
+
   const getObjetives = (activity) =>{
     const objTypes = {
       Pairing: 'pair',
@@ -40,6 +42,7 @@ const processXML = (data) =>{
   const getImages = (list) => (
     list.map(img=> {
     const url = img.split('/');
+    images.push(url[url.length-1]);
     return `<url>${url[url.length-1]}</url>`
   })).join('');
 
@@ -72,18 +75,20 @@ const processXML = (data) =>{
 
   const getAreas = (activity) => {
    const areas = data.areas.filter((ar)=> activity._id.toString() === ar.activityId.toString());
-   return areas.map(ar => (
-    `<Area id="${ar._id.toString()}" type="${ar.type}" numValue="${ar.mathematics}">
+   return areas.map(ar => {
+    const bg = ar.background.split('/')[ar.background.split('/').length-1] || '';
+    if (bg) images.push(bg);
+    return `<Area id="${ar._id.toString()}" type="${ar.type}" numValue="${ar.mathematics}">
       <pos x="${ar.offset.x}" y="${ar.offset.y}" />
       <size height="${ar.size.h}" width="${ar.size.w}"/>
       <rotation value="0"/>
       <posfondo x="0" y="0"/>
-      <bg url="${ar.background.split('/')[ar.background.split('/').length-1] || ''}"/>
+      <bg url="${bg}"/>
       <TokenList>
         ${getTokens(activity, ar._id)}
       </TokenList> 
     </Area>`
-   )).join('');
+  }).join('');
   }
 
   const activities = data.activities.map(ac => (
@@ -117,7 +122,7 @@ const processXML = (data) =>{
   `)
 
 
-  return xml.replace(/(^[ \t]*\n)/gm, "");
+  return {xml: xml.replace(/(^[ \t]*\n)/gm, ""), images: images}
 }
 
 module.exports = processXML;
