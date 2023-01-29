@@ -1,7 +1,7 @@
 const config = {
   version: 3,
   mongodb: {
-    URI: 'mongodb://localhost:27017/Dedos'
+    URI: 'mongodb://127.0.0.1:27017/Dedos'
   },
   authorization:{
     secret: 'URJCisTheBest',
