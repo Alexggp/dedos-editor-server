@@ -3,6 +3,7 @@ const processXML = require('./processXML');
 const createZIP = require('./createZIP');
 
 
+
 const controller = async (req, res) => {
   try {
 
@@ -27,7 +28,7 @@ const controller = async (req, res) => {
       objetives
     }
     const { xml, images } = processXML(payload);
-    const fileName = await createZIP(xml, images, payload.project.title.replace(/\s/g, ""))
+    const fileName = await createZIP(xml, images, payload.project.title.replace(/\s/g, ""), payload)
     res.send(fileName);
   }
   catch (e) {
