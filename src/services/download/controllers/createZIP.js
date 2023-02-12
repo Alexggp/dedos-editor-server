@@ -1,6 +1,6 @@
 const fs = require('fs');
 const archiver = require('archiver');
-const createMiniature = require('./createMiniatures');
+const createMiniature = require('./createScreenShot');
 
 const DIR = './tmp/';
 
@@ -20,24 +20,8 @@ const zipDirectory = (sourceDir, outPath) => {
   });
 }
 
-const createZIP = async (xml, images, name, payload) =>{
-
-  await fs.rmSync(DIR,{ recursive: true, force: true });
-  if (await !fs.existsSync(DIR)) {
-    await fs.mkdirSync(DIR);
-  }
-  await fs.mkdirSync(DIR + 'contents');
-  images.forEach(async img => {
-    await fs.copyFile('./public/'+img, DIR+'contents/'+img, (err) => {
-      if (err) throw err;
-    });
-  });
-  await createMiniature(payload);
-  const fileName = DIR + name + '.xml';
+const createZIP = async (name) =>{
   const outFile = './public/'+name+'.zip';
-  await fs.writeFileSync(fileName, xml, 'utf-8');
-
-
   await zipDirectory(DIR, outFile);
   return outFile
 }

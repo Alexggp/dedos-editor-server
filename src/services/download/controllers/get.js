@@ -1,8 +1,8 @@
 const { ProjectsModel, ActivitiesModel, AreasModel, TokensModel, ObjetivesModel } = require('../../../database/models/projects.js');
 const processXML = require('./processXML');
+const prepareDirectory = require('./prepareDirectory');
 const createZIP = require('./createZIP');
-
-
+const createScreenShot = require('./createScreenShot');
 
 const controller = async (req, res) => {
   try {
@@ -27,9 +27,12 @@ const controller = async (req, res) => {
       tokens,
       objetives
     }
-    const { xml, images } = processXML(payload);
-    const fileName = await createZIP(xml, images, payload.project.title.replace(/\s/g, ""), payload)
-    res.send(fileName);
+    const name = payload.project.title.replace(/\s/g, "");
+    const {xml, images} = processXML(payload);
+    await prepareDirectory(xml, images, name);
+    await createScreenShot(payload);
+    await createZIP(name)
+    res.send({file: name+'.zip'});
   }
   catch (e) {
     console.log(e);
