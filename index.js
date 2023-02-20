@@ -32,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/public', express.static('public'));
+app.use('/tmp', express.static('tmp'));
 app.use('/user',loginRountes);
 app.use('/', jwtAuthentication, loadingRoutes.register());
 

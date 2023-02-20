@@ -1,8 +1,8 @@
 const fs = require('fs');
 const archiver = require('archiver');
-const createMiniature = require('./createScreenShot');
 
 const DIR = './tmp/';
+const pdDir = DIR + 'proyect_data/';
 
 const zipDirectory = (sourceDir, outPath) => {
   const archive = archiver('zip', { zlib: { level: 9 }});
@@ -21,8 +21,8 @@ const zipDirectory = (sourceDir, outPath) => {
 }
 
 const createZIP = async (name) =>{
-  const outFile = './public/'+name+'.zip';
-  await zipDirectory(DIR, outFile);
+  const outFile = DIR+name+'.zip';
+  await zipDirectory(pdDir, outFile);
   return outFile
 }
 

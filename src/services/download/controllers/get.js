@@ -31,8 +31,10 @@ const controller = async (req, res) => {
     const {xml, images} = processXML(payload);
     await prepareDirectory(xml, images, name);
     await createScreenShot(payload);
-    await createZIP(name)
-    res.send({file: name+'.zip'});
+    const file = await createZIP(name);
+    const fileName = name+'.zip';
+    console.log(file, fileName)
+    res.download(file, fileName);
   }
   catch (e) {
     console.log(e);
