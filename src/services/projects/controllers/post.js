@@ -14,6 +14,7 @@ const controller = async (req, res)=>{
       userId: userId,
       title: data.title,
       description: data.description,
+      locale: data.locale,
       screenResolution: data.screenResolution
     });
     await project.save();   

@@ -6,6 +6,7 @@ const projectsSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'users' },
   title: String,
   description: String,
+  locale: String,
   screenResolution: String,
 });
 
