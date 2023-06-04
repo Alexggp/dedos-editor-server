@@ -78,30 +78,31 @@ const processXML = (data) =>{
    return areas.map(ar => {
     const bg = ar.background.split('/')[ar.background.split('/').length-1] || '';
     if (bg) images.push(bg);
-    return `<Area id="${ar._id.toString()}" type="${ar.type}" numValue="${ar.mathematics}">
+    const type = (ar.type === "Player") ? "Jugador" : "Juego";
+    return `<Area id="${ar._id.toString()}" type="${type}" numValue="${ar.mathematics || ''}">
       <pos x="${ar.offset.x}" y="${ar.offset.y}" />
       <size height="${ar.size.h}" width="${ar.size.w}"/>
       <rotation value="0"/>
       <posfondo x="0" y="0"/>
       <bg url="${bg}"/>
-      <TokenList>
+      <Tokenlist>
         ${getTokens(activity, ar._id)}
-      </TokenList> 
+      </Tokenlist> 
     </Area>`
   }).join('');
   }
 
   const activities = data.activities.map(ac => (
       `<Activity>
-        <Objetives>
+        <Objectives>
           ${getObjetives(ac)}
-        </Objetives>  
-        <TokenList>
+        </Objectives>  
+        <Tokenlist>
           ${getTokens(ac, 0)}
-        </TokenList>  
-        <AreaList>
+        </Tokenlist>  
+        <Arealist>
           ${getAreas(ac)}
-        </AreaList> 
+        </Arealist> 
         <Arrows>
           ${getArrows(ac)}
         </Arrows> 
