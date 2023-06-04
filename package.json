@@ -1,7 +1,7 @@
 {
-  "name": "comander_server",
+  "name": "dedos_editor_server",
   "version": "1.0.0",
-  "description": "Serverside of commander app",
+  "description": "Server side of Dedos Editor Web appication",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

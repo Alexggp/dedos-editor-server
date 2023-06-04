@@ -29,8 +29,8 @@ const controller = async (req, res) => {
     }
     const name = payload.project.title.replace(/\s/g, "");
     const {xml, images} = processXML(payload);
-    await prepareDirectory(xml, images, name);
-    await createScreenShot(payload);
+    const newDirectory = await prepareDirectory(xml, images, name);
+    await createScreenShot(payload, newDirectory);
     const file = await createZIP(name);
     const fileName = name+'.zip';
     console.log(file, fileName)

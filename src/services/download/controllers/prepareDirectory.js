@@ -10,16 +10,19 @@ const prepareDirectory = async (xml, images, name) => {
         await fs.mkdirSync(DIR);
 
     }
+    const newDirectory = pdDir + name + '/';
     await fs.mkdirSync(pdDir);
-    await fs.mkdirSync(pdDir + 'screenshots');
-    await fs.mkdirSync(pdDir + 'contents');
+    await fs.mkdirSync(newDirectory);
+    await fs.mkdirSync(newDirectory + 'screenshots');
+    await fs.mkdirSync(newDirectory + 'contents');
     for (const img of images) {
-        await fs.copyFile('./public/' + img, pdDir + 'contents/' + img, (err) => {
+        await fs.copyFile('./public/' + img, newDirectory + 'contents/' + img, (err) => {
             if (err) throw err;
         });
     };
-    const fileName = pdDir + name + '.xml';
+    const fileName = newDirectory + name + '.xml';
     await fs.writeFileSync(fileName, xml, 'utf-8');
+    return newDirectory;
 }
 
 module.exports = prepareDirectory;
